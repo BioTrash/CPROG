@@ -30,7 +30,7 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
 # Windows INCLUDE_PATHS!
 #INCLUDE_PATHS = -Iinclude -IC:/msys64/ucrt64/include
 # Linux INCLUDE_PATHS!
-INCLUDE_PATHS = Iinclude -IC:/usr/include
+INCLUDE_PATHS = -Iinclude -IC:/usr/include
 
 # BIBLIOTEKSFILER–kompilerad objektkod
 # Mac INTEL LIBRARY_PATHS!
