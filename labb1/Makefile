@@ -43,13 +43,11 @@ INCLUDE_PATHS = -Iinclude -IC:/usr/include
 LIBRARY_PATHS = -Llib -LC:/usr/lib
 
 # LÄNKNING - objekfiler som används vid länkning. Enklare program utan SDL behöver normalt inte några speciella länk-flaggor
-#LINKER_FLAGS = 
+LINKER_FLAGS = 
 # Om SDL2 används, Mac LINKER_FLAGS!
 #LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 # Om SDL2 används, Windows LINKER_FLAGS!
 #LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
-# Om SDL2 används, Linux LINKER_FLAGS!
-LINKER_FLAGS = -lSDL2
 
 
 all:
