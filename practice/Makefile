@@ -49,7 +49,7 @@ LIBRARY_PATHS = -Llib -LC:/usr/lib
 # Om SDL2 används, Windows LINKER_FLAGS!
 #LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 # Om SDL2 används, Linux LINKER_FLAGS!
-LINKER_FLAGS = -lSDL2
+LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
 
 
 all:
