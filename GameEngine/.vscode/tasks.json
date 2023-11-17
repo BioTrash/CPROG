@@ -4,9 +4,16 @@
             "type": "cppbuild",
             "label": "build",
             "command": "make",
-            "args": [],
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/build/debug/play",
+                "-std=c++17"
+            ],
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${fileDirname}"
             },
             "problemMatcher": [
                 "$gcc"
