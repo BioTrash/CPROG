@@ -7,6 +7,7 @@ namespace gameengine{
 
         win = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
         ren = SDL_CreateRenderer(win, -1, 0);
+        
         TTF_Init();
         font = TTF_OpenFont("/usr/share/fonts/truetype/noto/NotoSansMono-Regular.ttf", 36);
 

@@ -6,8 +6,9 @@ using namespace gameengine;
 
 int main(int argc, char** argv){
     Session ses;
-    Label lbl(100, 100, 200, 70, "Hej");
-    ses.add(&lbl);
+    Label* lbl = Label::getInstance(0, 0, 18, 36, "Hello, World!");
+    ses.add(lbl);
     ses.run();
+
     return 0;
 };
