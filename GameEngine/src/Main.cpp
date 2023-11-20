@@ -1,13 +1,16 @@
 #include <SDL2/SDL.h>
-#include "Label.h"
 #include "Session.h"
+#include "Character.h"
 
 using namespace gameengine;
 
 int main(int argc, char** argv){
+
     Session ses;
-    Label* lbl = Label::getInstance(0, 0, 18, 36, "Hello, World!");
-    ses.add(lbl);
+
+    Character* mc = Character::getInstance(100, 100, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png", false, false);
+    ses.add(mc);
+
     ses.run();
 
     return 0;
