@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/rufus/SU/CPROG/cmakeQuickStart/build",
+  "command": "/usr/bin/g++   -O2 -g -DNDEBUG -o CMakeFiles/SequelTest.dir/main.cpp.o -c /home/rufus/SU/CPROG/cmakeQuickStart/main.cpp",
+  "file": "/home/rufus/SU/CPROG/cmakeQuickStart/main.cpp"
+}
+]
