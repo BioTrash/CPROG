@@ -10,15 +10,21 @@ namespace gameengine{
             ~Character();
 
             void render() const;
-            void controls(bool &mControl, bool &kControl);
+            void keyDown(const SDL_Event& event) override;
+            void keyUp(const SDL_Event& event) override;
+            void updatePosition();
         protected:
             Character(int x, int y, int w, int h, const char* imagePath, bool mControl, bool kControl);
         private:
             bool mControl;
             bool kControl;
-            const char* myPath;
             SDL_Surface* surf;
             SDL_Texture* texture;
+
+            bool upPressed = false;
+            bool downPressed = false;
+            bool leftPressed = false;
+            bool rightPressed = false;
     };
 }
 
