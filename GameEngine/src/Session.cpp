@@ -2,7 +2,7 @@
 #include "System.h"
 #include <SDL2/SDL.h>
 
-#define FPS 120
+#define FPS 30
 
 namespace gameengine{
 
@@ -51,7 +51,7 @@ namespace gameengine{
             }
 
             for (Component* c : comp) {
-            c->updatePosition(event);
+            c->updatePosition();
             }
 
             delay = nextTick - SDL_GetTicks();

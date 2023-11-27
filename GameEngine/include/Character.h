@@ -6,19 +6,18 @@
 namespace gameengine{
     class Character: public Component{
         public:
-            static Character* getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, bool kControl, int speed);
+            static Character* getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed);
             ~Character();
 
             void render() const;
-            void updatePosition(const SDL_Event& event) override;
+            void updatePosition() override;
             void keyDown(const SDL_Event& event) override;
             void keyUp(const SDL_Event& event) override;
             
         protected:
-            Character(int x, int y, int w, int h, const char* imagePath, bool mControl, bool kControl, int speed);
+            Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed);
         private:
             bool mControl;
-            bool kControl;
 
             int speed;
 

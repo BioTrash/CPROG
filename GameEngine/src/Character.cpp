@@ -4,11 +4,11 @@
 
 namespace gameengine{
 
-    Character* Character::getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, bool kControl, int speed){
-        return new Character(x, y, w, h, imagePath, mControl, kControl, speed);
+    Character* Character::getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed){
+        return new Character(x, y, w, h, imagePath, mControl, speed);
     }
     
-    Character::Character(int x, int y, int w, int h, const char* imagePath, bool mControl, bool kControl, int speed): Component{x,y,w,h}, mControl(mControl), kControl(kControl), speed(speed){
+    Character::Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed): Component{x,y,w,h}, mControl(mControl), speed(speed){
         surf = IMG_Load(imagePath);
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
         SDL_WarpMouseInWindow(sys.getWindow(), x, y);
@@ -26,7 +26,7 @@ namespace gameengine{
     }
 
     void Character::keyDown(const SDL_Event& event) {
-        if(kControl){
+        if(!mControl){
             switch (event.key.keysym.sym) {
                 case SDLK_UP:
                     upPressed = true;
@@ -48,7 +48,7 @@ namespace gameengine{
     }
 
     void Character::keyUp(const SDL_Event& event) {
-        if(kControl){
+        if(!mControl){
         switch (event.key.keysym.sym) {
                 case SDLK_UP:
                     upPressed = false;
@@ -70,10 +70,10 @@ namespace gameengine{
     }
 
 
-    void Character::updatePosition(const SDL_Event& event) { //needs to be tied to FPS
+    void Character::updatePosition() {
         SDL_Rect& currentRect = const_cast<SDL_Rect&>(getRect());
 
-        if(kControl){
+        if(!mControl){
 
             int moveX = (rightPressed ? 1 : 0) - (leftPressed ? 1 : 0);
             int moveY = (downPressed ? 1 : 0) - (upPressed ? 1 : 0);
@@ -90,8 +90,12 @@ namespace gameengine{
         }
 
         if(mControl){
-            currentRect.y = event.motion.y;
-            currentRect.x = event.motion.x;
+
+            int mouseX, mouseY;
+            SDL_GetMouseState(&mouseX, &mouseY);
+
+            currentRect.y = mouseY;
+            currentRect.x = mouseX;
         }
 
     }

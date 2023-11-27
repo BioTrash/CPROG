@@ -14,7 +14,7 @@ namespace gameengine{
             virtual void render() const = 0;
 
             const SDL_Rect& getRect() const { return rect; }
-            virtual void updatePosition(const SDL_Event&) {};
+            virtual void updatePosition() {};
 
         protected:
 
