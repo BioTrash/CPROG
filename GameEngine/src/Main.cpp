@@ -8,7 +8,7 @@ int main(int argc, char** argv){
 
     Session ses;
 
-    Character* mc = Character::getInstance(100, 100, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png", false, true);
+    Character* mc = Character::getInstance(400, 200, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png", false, true, 5);
     ses.add(mc);
 
     ses.run();

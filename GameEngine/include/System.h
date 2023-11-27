@@ -10,6 +10,7 @@ namespace gameengine{
 
             SDL_Renderer* getRen() const;
             TTF_Font* getFont() const;
+            SDL_Window* getWindow() const;
 
         private:
             SDL_Window* win;

@@ -25,6 +25,10 @@ namespace gameengine{
         return ren;
     }
 
+    SDL_Window* System::getWindow() const{
+        return win;
+    }
+
     TTF_Font* System::getFont() const{
         return font;
     }
