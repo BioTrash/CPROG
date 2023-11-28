@@ -1,17 +1,23 @@
 #include "Character.h"
 #include "System.h"
 #include <SDL2/SDL_image.h>
+#include <string>
 
 namespace gameengine{
 
-    Character* Character::getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed){
-        return new Character(x, y, w, h, imagePath, mControl, speed);
+    Character* Character::getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id){
+        return new Character(x, y, w, h, imagePath, mControl, speed, id);
     }
     
-    Character::Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed): Component{x,y,w,h}, mControl(mControl), speed(speed){
+    Character::Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id): Component{x,y,w,h, id}, mControl(mControl), speed(speed){
         surf = IMG_Load(imagePath);
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
-        SDL_WarpMouseInWindow(sys.getWindow(), x, y);
+
+        if(mControl){
+            SDL_ShowCursor(SDL_DISABLE);
+            SDL_WarpMouseInWindow(sys.getWindow(), x, y);
+        }
+        
     }
 
     void Character::render() const {

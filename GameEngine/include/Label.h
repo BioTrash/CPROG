@@ -7,13 +7,13 @@
 namespace gameengine{
     class Label: public Component{
         public:
-            static Label* getInstance(int x, int y, int w, int h, std::string text);
+            static Label* getInstance(int x, int y, int w, int h, std::string text, std::string id);
             void render() const;
             std::string getContent() const;
             void setText(std::string newText);
             ~Label();
         protected:
-            Label(int x, int y, int w, int h, std::string text);
+            Label(int x, int y, int w, int h, std::string text, std::string id);
         private:
             std::string content;
             SDL_Texture* texture;

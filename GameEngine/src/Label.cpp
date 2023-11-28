@@ -8,13 +8,13 @@ using namespace std;
 
 namespace gameengine{
 
-    Label* Label::getInstance(int x, int y, int w, int h, string text){
+    Label* Label::getInstance(int x, int y, int w, int h, string text, string id){
 
         int newW = w * text.length();
-        return new Label(x, y, newW, h, text);
+        return new Label(x, y, newW, h, text, id);
     }
 
-    Label::Label(int x, int y, int w, int h, string text): Component(x,y,w,h), content(text){
+    Label::Label(int x, int y, int w, int h, string text, string id): Component(x,y,w,h,id), content(text){
         SDL_Surface* surf = TTF_RenderText_Solid(sys.getFont(), content.c_str(), {0,0,0});
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
         SDL_FreeSurface(surf);

@@ -2,11 +2,12 @@
 #define CHARACTER_H
 #include "Component.h"
 #include <SDL2/SDL.h>
+#include <string>
 
 namespace gameengine{
     class Character: public Component{
         public:
-            static Character* getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed);
+            static Character* getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id);
             ~Character();
 
             void render() const;
@@ -15,10 +16,9 @@ namespace gameengine{
             void keyUp(const SDL_Event& event) override;
             
         protected:
-            Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed);
+            Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string charId);
         private:
             bool mControl;
-
             int speed;
 
             SDL_Surface* surf;
