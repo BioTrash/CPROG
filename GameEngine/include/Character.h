@@ -16,7 +16,7 @@ namespace gameengine{
             void keyUp(const SDL_Event& event) override;
             
         protected:
-            Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string charId);
+            Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id);
         private:
             bool mControl;
             int speed;

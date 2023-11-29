@@ -12,7 +12,7 @@ namespace gameengine{
             virtual void mouseUp(const SDL_Event&) {}
             virtual void keyDown(const SDL_Event&) {}
             virtual void keyUp(const SDL_Event&) {}
-            virtual void render() const = 0;
+            virtual void render() const {};
 
             const SDL_Rect& getRect() const { return rect; }
             const std::string& getId() const { return id; }
