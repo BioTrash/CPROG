@@ -15,6 +15,7 @@ namespace gameengine{
             virtual void render() const {};
 
             const SDL_Rect& getRect() const { return rect; }
+            SDL_Rect& changeRect() { return rect; }
             const std::string& getId() const { return id; }
             virtual void updatePosition() {};
 

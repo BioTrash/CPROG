@@ -9,7 +9,7 @@ namespace gameengine{
         return new Character(x, y, w, h, imagePath, mControl, speed, id);
     }
     
-    Character::Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id): Component{x,y,w,h, id}, mControl(mControl), speed(speed){
+    Character::Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id): Component{x,y,w,h, id}, imagePath(imagePath), mControl(mControl), speed(speed){
         surf = IMG_Load(imagePath);
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
 
