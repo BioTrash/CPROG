@@ -8,7 +8,7 @@ namespace gameengine {
     }
 
     Spawner::Spawner(int x, int y, std::string id, Character* target, Session& ses, int w, int h, int amount, float time)
-        : Component(x, y, w, h, id), target(target), width(w), height(h), ses(ses), time(time){ random(); }
+        : Component(x, y, w, h, id), target(target), width(w), height(h), ses(ses), time(time){ random(); random(); random(); }
 
     Spawner::~Spawner() {
         // Implementation of destructor
@@ -29,6 +29,9 @@ namespace gameengine {
     void Spawner::spawn(int& w, int& h) {
         target->changeRect().x = w;
         target->changeRect().y = h;
-        ses.add(target);
+
+        Character* tempTarget = Character::getCopy(*target);
+
+        ses.add(tempTarget);
     }
 }

@@ -8,6 +8,10 @@ namespace gameengine{
     Character* Character::getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id){
         return new Character(x, y, w, h, imagePath, mControl, speed, id);
     }
+
+    Character* Character::getCopy(const Character& other){
+        return new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.mControl, other.speed, other.getId());
+    }
     
     Character::Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id): Component{x,y,w,h, id}, imagePath(imagePath), mControl(mControl), speed(speed){
         surf = IMG_Load(imagePath);
@@ -16,6 +20,17 @@ namespace gameengine{
         if(mControl){
             SDL_ShowCursor(SDL_DISABLE);
             SDL_WarpMouseInWindow(sys.getWindow(), x, y);
+        }
+        
+    }
+
+    Character::Character(const Character& other) : Component{ other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.getId()}, imagePath(other.imagePath), mControl(other.mControl), speed(other.speed) {
+        surf = IMG_Load(imagePath);
+        texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
+
+        if(mControl){
+            SDL_ShowCursor(SDL_DISABLE);
+            SDL_WarpMouseInWindow(sys.getWindow(), other.getRect().x, other.getRect().y);
         }
         
     }

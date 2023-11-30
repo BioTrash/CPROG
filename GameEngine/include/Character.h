@@ -8,6 +8,7 @@ namespace gameengine{
     class Character: public Component{
         public:
             static Character* getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id);
+            static Character* getCopy(const Character& other);
             ~Character();
 
             void render() const;
@@ -16,6 +17,7 @@ namespace gameengine{
             void keyUp(const SDL_Event& event) override;
             
         protected:
+            Character(const Character& other);
             Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id);
         private:
             const char* imagePath;
