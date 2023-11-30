@@ -15,7 +15,7 @@ int main(int argc, char** argv){
 
     Character* enemy = Character::getInstance(0, 0, 50, 50, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", false, 10, "Enemy");
 
-    Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 200, 100);
+    Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 1.0f);
 
     ses.add(spawner);
 

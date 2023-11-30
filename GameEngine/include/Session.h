@@ -8,6 +8,7 @@ namespace gameengine{
         public:
             void add(Component* c);
             void run();
+            const std::vector<Component*> getComp() const { return comp; }
             ~Session();  
         private:
             std::vector<Component*> comp;
