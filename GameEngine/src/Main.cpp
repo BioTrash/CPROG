@@ -15,9 +15,16 @@ int main(int argc, char** argv){
 
     Character* enemy = Character::getInstance(0, 0, 50, 50, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", 10, "Enemy");
 
-    Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 1.0f);
+    enemy->setFunc([enemy]() mutable {
+        printf("Reached from outside ");
+        enemy->changeRect().y++;    
+    });
 
-    ses.add(spawner);
+    ses.add(enemy);
+
+/*     Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 1.0f);
+
+    ses.add(spawner); */
 
     ses.run();
 

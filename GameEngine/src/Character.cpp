@@ -10,7 +10,9 @@ namespace gameengine{
     }
 
     Character* Character::getCopy(const Character& other){
-        return new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.speed, other.getId(), other.controlable, other.mControl);
+        auto newCharacter = new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.speed, other.getId(), other.controlable, other.mControl);
+        newCharacter->copyOptionalFunction(other);
+        return newCharacter;
     }
     
     Character::Character(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable, bool mControl): Component{x,y,w,h, id}, imagePath(imagePath), speed(speed), controlable(controlable), mControl(mControl){
@@ -24,7 +26,7 @@ namespace gameengine{
         
     }
 
-    Character::Character(const Character& other) : Component{ other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.getId()}, imagePath(other.imagePath), speed(other.speed), controlable(other.controlable), mControl(other.mControl) {
+    Character::Character(const Character& other) : Component{ other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.getId()}, imagePath(other.imagePath), speed(other.speed), controlable(other.controlable), mControl(other.mControl){
         surf = IMG_Load(imagePath);
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
 
@@ -94,6 +96,12 @@ namespace gameengine{
     void Character::updatePosition() {
         SDL_Rect& currentRect = const_cast<SDL_Rect&>(getRect());
 
+        if(optionalFunction != nullptr) { optionalFunction(); }
+
+/*         this->setFunc() = [this](){
+            this->changeRect().y++;
+        };
+ */
         if(!mControl && controlable){
 
             int moveX = (rightPressed ? 1 : 0) - (leftPressed ? 1 : 0);
