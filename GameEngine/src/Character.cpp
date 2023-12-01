@@ -5,30 +5,30 @@
 
 namespace gameengine{
 
-    Character* Character::getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id){
-        return new Character(x, y, w, h, imagePath, mControl, speed, id);
+    Character* Character::getInstance(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable, bool mControl){
+        return new Character(x, y, w, h, imagePath, speed, id, controlable, mControl);
     }
 
     Character* Character::getCopy(const Character& other){
-        return new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.mControl, other.speed, other.getId());
+        return new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.speed, other.getId(), other.controlable, other.mControl);
     }
     
-    Character::Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id): Component{x,y,w,h, id}, imagePath(imagePath), mControl(mControl), speed(speed){
+    Character::Character(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable, bool mControl): Component{x,y,w,h, id}, imagePath(imagePath), speed(speed), controlable(controlable), mControl(mControl){
         surf = IMG_Load(imagePath);
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
 
-        if(mControl){
+        if(mControl && controlable){
             SDL_ShowCursor(SDL_DISABLE);
             SDL_WarpMouseInWindow(sys.getWindow(), x, y);
         }
         
     }
 
-    Character::Character(const Character& other) : Component{ other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.getId()}, imagePath(other.imagePath), mControl(other.mControl), speed(other.speed) {
+    Character::Character(const Character& other) : Component{ other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.getId()}, imagePath(other.imagePath), speed(other.speed), controlable(other.controlable), mControl(other.mControl) {
         surf = IMG_Load(imagePath);
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
 
-        if(mControl){
+        if(mControl && controlable){
             SDL_ShowCursor(SDL_DISABLE);
             SDL_WarpMouseInWindow(sys.getWindow(), other.getRect().x, other.getRect().y);
         }
@@ -47,7 +47,7 @@ namespace gameengine{
     }
 
     void Character::keyDown(const SDL_Event& event) {
-        if(!mControl){
+        if(!mControl && controlable){
             switch (event.key.keysym.sym) {
                 case SDLK_UP:
                     upPressed = true;
@@ -69,7 +69,7 @@ namespace gameengine{
     }
 
     void Character::keyUp(const SDL_Event& event) {
-        if(!mControl){
+        if(!mControl && controlable){
         switch (event.key.keysym.sym) {
                 case SDLK_UP:
                     upPressed = false;
@@ -94,7 +94,7 @@ namespace gameengine{
     void Character::updatePosition() {
         SDL_Rect& currentRect = const_cast<SDL_Rect&>(getRect());
 
-        if(!mControl){
+        if(!mControl && controlable){
 
             int moveX = (rightPressed ? 1 : 0) - (leftPressed ? 1 : 0);
             int moveY = (downPressed ? 1 : 0) - (upPressed ? 1 : 0);
@@ -110,7 +110,7 @@ namespace gameengine{
 
         }
 
-        if(mControl){
+        if(mControl && controlable){
 
             int mouseX, mouseY;
             SDL_GetMouseState(&mouseX, &mouseY);

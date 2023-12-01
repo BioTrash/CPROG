@@ -7,7 +7,7 @@
 namespace gameengine{
     class Character: public Component{
         public:
-            static Character* getInstance(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id);
+            static Character* getInstance(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable = false, bool mControl = false);
             static Character* getCopy(const Character& other);
             ~Character();
 
@@ -18,11 +18,12 @@ namespace gameengine{
             
         protected:
             Character(const Character& other);
-            Character(int x, int y, int w, int h, const char* imagePath, bool mControl, int speed, std::string id);
+            Character(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable = false, bool mControl = false);
         private:
             const char* imagePath;
-            bool mControl;
             int speed;
+            bool controlable;
+            bool mControl;
 
             SDL_Surface* surf;
             SDL_Texture* texture;
