@@ -1,13 +1,15 @@
+// Spawner.cpp
+
 #include "Spawner.h"
-#include <SDL2/SDL.h>
 
 namespace gameengine {
+
     Spawner* Spawner::getInstance(int x, int y, std::string id, Character* target, Session& ses, int w, int h, int amount, float time) {
         return new Spawner(x, y, id, target, ses, w, h, amount, time);
     }
 
     Spawner::Spawner(int x, int y, std::string id, Character* target, Session& ses, int w, int h, int amount, float time)
-        : Component(x, y, w, h, id), target(target), width(w), height(h), ses(ses), amount(amount), time(time) {
+        : Component(x, y, w, h, id), target(target), ses(ses), width(w), height(h), amount(amount), time(time) {
         lastUpdateTime = std::chrono::high_resolution_clock::now();
         std::random_device rd;
         engine = std::default_random_engine(rd());
@@ -36,16 +38,22 @@ namespace gameengine {
             int tmpWidth = sWidth(engine);
             int tmpHeight = sHeight(engine);
 
-            spawn(tmpWidth, tmpHeight);
+            // Pass the behavior function to the spawned character
+            spawn(tmpWidth, tmpHeight, target->getBehaviour());
         }
     }
 
-    void Spawner::spawn(int& w, int& h) {
-        target->changeRect().x = w;
-        target->changeRect().y = h;
+    void Spawner::spawn(int& w, int& h, const std::function<void(Character&)>& behaviorFunction) {
+        target->setRect().x = w;
+        target->setRect().y = h;
 
+        // Create a new Character instance by copying the original target
         Character* tempTarget = Character::getCopy(*target);
 
+        // Set the behavior function for the spawned character
+        tempTarget->setBehaviour(behaviorFunction);
+
+        // Add the spawned character to the session
         ses.add(tempTarget);
     }
 }

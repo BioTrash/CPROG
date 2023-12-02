@@ -1,3 +1,5 @@
+// Spawner.h
+
 #ifndef SPAWNER_H
 #define SPAWNER_H
 
@@ -11,22 +13,22 @@
 namespace gameengine {
     class Spawner : public Component {
     public:
-        static Spawner* getInstance(int x, int y, std::string id, Character* target, Session& ses, int w = 1, int h = 1, int amount = 0, float time = 0);
-        void spawn(int& w, int& h);
-        void updatePosition() override;
+        static Spawner* getInstance(int x, int y, std::string id, Character* target, Session& ses, int w, int h, int amount, float time);
         ~Spawner();
 
-    protected:
-        Spawner(int x, int y, std::string id, Character* target, Session& ses, int w = 1, int h = 1, int amount = 1, float time = 0);
+        void updatePosition() override;
 
     private:
+        Spawner(int x, int y, std::string id, Character* target, Session& ses, int w, int h, int amount, float time);
+        void spawn(int& w, int& h, const std::function<void(Character&)>& behaviorFunction);
+
         Character* target;
+        Session& ses;
         int width;
         int height;
-        Session& ses;
         int amount;
-        int time;
-        std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdateTime;
+        float time;
+        std::chrono::high_resolution_clock::time_point lastUpdateTime;
         std::default_random_engine engine;
     };
 }

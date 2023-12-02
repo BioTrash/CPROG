@@ -11,7 +11,7 @@ namespace gameengine{
 
     Character* Character::getCopy(const Character& other){
         auto newCharacter = new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.speed, other.getId(), other.controlable, other.mControl);
-        newCharacter->copyOptionalFunction(other);
+/*         newCharacter->copyOptionalFunction(other); */
         return newCharacter;
     }
     
@@ -92,16 +92,13 @@ namespace gameengine{
         }
     }
 
-
     void Character::updatePosition() {
         SDL_Rect& currentRect = const_cast<SDL_Rect&>(getRect());
+        
+        if (behaviourFunction) {
+            behaviourFunction(*this);
+        }
 
-        if(optionalFunction != nullptr) { optionalFunction(); }
-
-/*         this->setFunc() = [this](){
-            this->changeRect().y++;
-        };
- */
         if(!mControl && controlable){
 
             int moveX = (rightPressed ? 1 : 0) - (leftPressed ? 1 : 0);
