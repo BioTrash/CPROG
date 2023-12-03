@@ -71,14 +71,7 @@ namespace gameengine{
     }
 
     void Character::render() const {
-
-        SDL_Rect destRect = getRect();
-
-        // Adjust rendering position based on the sprite's pivot point
-        destRect.x -= destRect.w / 2;
-        destRect.y -= destRect.h / 2;
-        
-        SDL_RenderCopy(sys.getRen(), texture, NULL, &destRect);
+        SDL_RenderCopy(sys.getRen(), texture, NULL, &getRect());
     }
 
     void Character::keyDown(const SDL_Event& event) {

@@ -10,13 +10,11 @@ int main(int argc, char** argv) {
 
     Session ses;
 
-    Character* mc = Character::getInstance(400, 200, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png", 10, "Main Character", true, true);
+    Character* mc = Character::getInstance(400, 200, 50, 50, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png", 10, "Main Character", true, true);
 
     ses.add(mc);
 
     Character* enemy = Character::getInstance(0, 0, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", 10, "Enemy");
-
-    //Något är fel på hur jag ändrar bred och höjd på saker och ting, hitboxen ändras inte
 
     enemy->setBehaviour([mc](Character& target) {
         target.setRect().y++;
