@@ -10,9 +10,8 @@ namespace gameengine{
     }
 
     Character* Character::getCopy(const Character& other){
-        auto newCharacter = new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.speed, other.getId(), other.controlable, other.mControl);
-/*         newCharacter->copyOptionalFunction(other); */
-        return newCharacter;
+        return new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.speed, other.getId(), other.controlable, other.mControl);
+        
     }
     
     Character::Character(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable, bool mControl): Component{x,y,w,h, id}, imagePath(imagePath), speed(speed), controlable(controlable), mControl(mControl){
@@ -35,6 +34,17 @@ namespace gameengine{
             SDL_WarpMouseInWindow(sys.getWindow(), other.getRect().x, other.getRect().y);
         }
         
+    }
+
+    const bool Character::isTouching(Character* target) const {
+        if(target->getRect().x < this->getRect().x + this->getRect().w &&
+        target->getRect().x + target->getRect().w > this->getRect().x &&
+        target->getRect().y < this->getRect().y + this->getRect().h &&
+        target->getRect().y + target->getRect().h > this->getRect().y){
+            return true;
+        }
+
+        return false;
     }
 
     void Character::render() const {

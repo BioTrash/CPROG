@@ -16,11 +16,17 @@ int main(int argc, char** argv) {
 
     Character* enemy = Character::getInstance(0, 0, 50, 50, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", 10, "Enemy");
 
-    // Pass the function pointer to setBehaviour
-    //enemy->setBehaviour(&changeY);
+    enemy->setBehaviour([mc](Character& target) {
+        target.setRect().y++;
 
-    enemy->setBehaviour([](Character& c) {
-        c.setRect().y++;
+        if(target.isTouching(mc)){
+            target.setBehaviour([](Character& newTarget){
+                newTarget.setRect().y--;
+                newTarget.setRect().x++;
+            });
+        }
+
+
     });
 
     Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 1.0f);
