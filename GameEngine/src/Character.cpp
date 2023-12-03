@@ -37,13 +37,36 @@ namespace gameengine{
     }
 
     const bool Character::isTouching(Character* target) const {
-        if(target->getRect().x < this->getRect().x + this->getRect().w &&
-        target->getRect().x + target->getRect().w > this->getRect().x &&
-        target->getRect().y < this->getRect().y + this->getRect().h &&
-        target->getRect().y + target->getRect().h > this->getRect().y){
-            return true;
+        SDL_Rect rect1 = this->getRect();
+        SDL_Rect rect2 = target->getRect();
+
+        // Check if the rectangles overlap
+        if (SDL_HasIntersection(&rect1, &rect2)) {
+            int xMin = std::max(rect1.x, rect2.x);
+            int xMax = std::min(rect1.x + rect1.w, rect2.x + rect2.w);
+            int yMin = std::max(rect1.y, rect2.y);
+            int yMax = std::min(rect1.y + rect1.h, rect2.y + rect2.h);
+
+            Uint32* pixels1 = this->getPixel();
+            Uint32* pixels2 = target->getPixel();
+
+            // Iterate over the overlapping region
+            for (int y = yMin; y < yMax; ++y) {
+                for (int x = xMin; x < xMax; ++x) {
+                    // Get the pixel values for both surfaces
+                    Uint32 pixel1 = pixels1[(y - rect1.y) * rect1.w + (x - rect1.x)];
+                    Uint32 pixel2 = pixels2[(y - rect2.y) * rect2.w + (x - rect2.x)];
+
+                    // Check if the pixels are not transparent
+                    if (pixel1 & 0xFF000000 && pixel2 & 0xFF000000) {
+                        // Collision detected
+                        return true;
+                    }
+                }
+            }
         }
 
+        // No collision detected
         return false;
     }
 

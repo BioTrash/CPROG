@@ -14,7 +14,9 @@ int main(int argc, char** argv) {
 
     ses.add(mc);
 
-    Character* enemy = Character::getInstance(0, 0, 50, 50, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", 10, "Enemy");
+    Character* enemy = Character::getInstance(0, 0, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", 10, "Enemy");
+
+    //Något är fel på hur jag ändrar bred och höjd på saker och ting, hitboxen ändras inte
 
     enemy->setBehaviour([mc](Character& target) {
         target.setRect().y++;
@@ -29,7 +31,7 @@ int main(int argc, char** argv) {
 
     });
 
-    Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 1.0f);
+    Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 5.0f);
 
     ses.add(spawner);
 
