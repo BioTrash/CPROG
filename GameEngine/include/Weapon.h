@@ -8,9 +8,10 @@ namespace gameengine{
     class Weapon : public Component {
         public:
             ~Weapon();
+            static Weapon* getEmpty();
             static Weapon* getInstance(int x, int y, int w, int h, std::string id, Character target, const char* imagePath, int speed, int amount, int spread, Projectile* proj = nullptr);
             static Weapon* getCopy(const Weapon& other);
-            
+            void updatePosition() override;
             void spawnProjectile();
         protected:
             Weapon();
