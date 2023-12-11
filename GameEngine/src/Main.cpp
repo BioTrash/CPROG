@@ -3,6 +3,7 @@
 #include "Session.h"
 #include "Character.h"
 #include "Spawner.h"
+#include "Projectile.h"
 
 using namespace gameengine;
 
@@ -27,6 +28,12 @@ int main(int argc, char** argv) {
         }
 
 
+    });
+
+    Projectile* projectile = Projectile::getInstance(mc->getRect().x, mc->getRect().y, 10, 10, "Projectile", "/home/rufus/SU/CPROG/GameEngine/resources/images/projectile.png", 30);
+
+    projectile->setBehaviour([](Projectile& target){
+        
     });
 
     Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 5.0f);

@@ -18,7 +18,6 @@ namespace gameengine {
         void setBehaviour(const std::function<void(Character&)>& behaviour) { behaviourFunction = behaviour; };
         const std::function<void(Character&)>& getBehaviour() { return behaviourFunction; };
         Uint32* getPixel() const { return static_cast<Uint32*>(surf->pixels); };
-        const SDL_Surface* getSurface() const { return surf; }
         const bool isTouching(Character* target) const;
         void render() const;
         void updatePosition() override;

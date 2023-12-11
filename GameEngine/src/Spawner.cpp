@@ -1,5 +1,3 @@
-// Spawner.cpp
-
 #include "Spawner.h"
 
 namespace gameengine {
