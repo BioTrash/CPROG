@@ -13,16 +13,15 @@ namespace gameengine {
         static Character* getInstance(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable = false, bool mControl = false);
         static Character* getCopy(const Character& other);
         ~Character();
-
-        // Update setBehaviour to accept a std::function<void(Character&)>
-        void setBehaviour(const std::function<void(Character&)>& behaviour) { behaviourFunction = behaviour; };
-        const std::function<void(Character&)>& getBehaviour() { return behaviourFunction; };
         Uint32* getPixel() const { return static_cast<Uint32*>(surf->pixels); };
         const bool isTouching(Character* target) const;
         void render() const;
         void updatePosition() override;
         void keyDown(const SDL_Event& event) override;
         void keyUp(const SDL_Event& event) override;
+
+        void setBehaviour(const std::function<void(Character&)>& behaviour) { behaviourFunction = behaviour; };
+        const std::function<void(Character&)>& getBehaviour() { return behaviourFunction; };
 
     protected:
         Character(const Character& other);
@@ -33,10 +32,11 @@ namespace gameengine {
         int speed;
         bool controlable;
         bool mControl;
-        std::function<void(Character&)> behaviourFunction; // Use std::function for storing the behavior function
 
         SDL_Surface* surf;
         SDL_Texture* texture;
+
+        std::function<void(Character&)> behaviourFunction;
 
         bool upPressed = false;
         bool downPressed = false;

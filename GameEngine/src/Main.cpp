@@ -3,6 +3,7 @@
 #include "Session.h"
 #include "Character.h"
 #include "Spawner.h"
+#include "Weapon.h"
 #include "Projectile.h"
 
 using namespace gameengine;
@@ -30,11 +31,17 @@ int main(int argc, char** argv) {
 
     });
 
+    //Weapon has to follow Main Character, Projectile has to follow weapon. Decide which is created first, weapon or projectile?
+
     Projectile* projectile = Projectile::getInstance(mc->getRect().x, mc->getRect().y, 10, 10, "Projectile", "/home/rufus/SU/CPROG/GameEngine/resources/images/projectile.png", 30);
 
     projectile->setBehaviour([](Projectile& target){
-        
+        target.setRect().y--;
     });
+
+    Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", mc, 1, 20, 1, ses, projectile, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png");
+
+    ses.add(weapon);
 
     Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 5.0f);
 

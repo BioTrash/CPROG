@@ -45,13 +45,9 @@ namespace gameengine {
         target->setRect().x = w;
         target->setRect().y = h;
 
-        // Create a new Character instance by copying the original target
         Character* tempTarget = Character::getCopy(*target);
-
-        // Set the behavior function for the spawned character
         tempTarget->setBehaviour(behaviorFunction);
 
-        // Add the spawned character to the session
         ses.add(tempTarget);
     }
 }
