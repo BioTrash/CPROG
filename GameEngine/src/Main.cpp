@@ -19,8 +19,6 @@ int main(int argc, char** argv) {
     Character* enemy = Character::getInstance(0, 0, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", 10, "Enemy");
 
     enemy->setBehaviour([mc](Character& target) {
-        target.setRect().y++;
-
         if(target.isTouching(mc)){
             target.setBehaviour([](Character& newTarget){
                 newTarget.setRect().y--;
@@ -29,17 +27,13 @@ int main(int argc, char** argv) {
         }
 
 
-    });
+    }); 
 
-    //Weapon has to follow Main Character, Projectile has to follow weapon. Decide which is created first, weapon or projectile?
+    //Figure out why projectile modifies all enemies while MC doesn't
 
-    Projectile* projectile = Projectile::getInstance(mc->getRect().x, mc->getRect().y, 10, 10, "Projectile", "/home/rufus/SU/CPROG/GameEngine/resources/images/projectile.png", 30);
+    Projectile* projectile = Projectile::getInstance(0, 0, 10, 10, "Projectile", "/home/rufus/SU/CPROG/GameEngine/resources/images/projectile.png", 30);
 
-    projectile->setBehaviour([](Projectile& target){
-        target.setRect().y--;
-    });
-
-    Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", mc, 1, 20, 1, ses, projectile, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png");
+    Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 20, 1, ses, mc, projectile, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png");
 
     ses.add(weapon);
 

@@ -1,5 +1,6 @@
 #include "Projectile.h"
 #include "System.h"
+#include "Character.h"
 #include <SDL2/SDL_image.h>
 #include <string>
 
@@ -23,7 +24,7 @@ namespace gameengine{
         return new Projectile(other.getRect().x, other.getRect().y, other.getRect().h, other.getRect().w, other.getId(), other.imagePath, other.speed);
     }
 
-    const bool Projectile::isTouching(Projectile* target) const {
+    const bool Projectile::isTouching(Character* target) const {
         SDL_Rect rect1 = this->getRect();
         SDL_Rect rect2 = target->getRect();
 
@@ -62,6 +63,8 @@ namespace gameengine{
     }
 
     void Projectile::updatePosition(){
+
+        this->setRect().y -= speed;
         if (behaviourFunction) {
             behaviourFunction(*this);
         }

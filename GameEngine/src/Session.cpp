@@ -2,7 +2,7 @@
 #include "System.h"
 #include <SDL2/SDL.h>
 
-#define FPS 24
+#define FPS 60
 
 namespace gameengine{
 
