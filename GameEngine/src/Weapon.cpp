@@ -17,6 +17,10 @@ namespace gameengine{
         return new Weapon(x, y, w, h, id, speed, amount, spread, ses, target, proj, imagePath);
     }
 
+    Weapon::~Weapon(){
+        //if(imagePath != NULL) SDL_FreeSurface(surf);
+    }
+
     void Weapon::render() const {
         SDL_RenderCopy(sys.getRen(), texture, NULL, &getRect());
     }
@@ -50,15 +54,13 @@ namespace gameengine{
     }
 
     void Weapon::spawn(const std::function<void(Projectile&)>& behaviorFunction){
+        proj->setRect().y = this->getRect().y;
+        proj->setRect().x = this->getRect().x;
+
+
         Projectile* tempProj = Projectile::getCopy(*proj);
         tempProj->setBehaviour(behaviorFunction);
-        tempProj->setRect().y = this->getRect().y;
-        tempProj->setRect().x = this->getRect().x;
 
         ses.add(tempProj);
-    }
-
-    Weapon::~Weapon(){
-        if(imagePath != NULL) SDL_FreeSurface(surf);
     }
 }

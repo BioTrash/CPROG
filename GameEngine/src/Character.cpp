@@ -1,5 +1,7 @@
 #include "Character.h"
 #include "System.h"
+#include "Projectile.h"
+#include "Session.h"
 #include <SDL2/SDL_image.h>
 #include <string>
 
@@ -11,7 +13,6 @@ namespace gameengine{
 
     Character* Character::getCopy(const Character& other){
         return new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.speed, other.getId(), other.controlable, other.mControl);
-        
     }
     
     Character::Character(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable, bool mControl): Component{x,y,w,h, id}, imagePath(imagePath), speed(speed), controlable(controlable), mControl(mControl){
@@ -36,7 +37,13 @@ namespace gameengine{
         
     }
 
-    const bool Character::isTouching(Character* target) const {
+    template const bool Character::isTouching<Character>(Character* target) const;
+    template const bool Character::isTouching<Projectile>(Projectile* target) const;
+
+    template <typename T>
+    const bool Character::isTouching(T* target) const {
+
+        
         SDL_Rect rect1 = this->getRect();
         SDL_Rect rect2 = target->getRect();
 
