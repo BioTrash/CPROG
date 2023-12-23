@@ -9,6 +9,14 @@ namespace gameengine{
     void Session::add(Component* c){
         comp.push_back(c);
     }
+    
+    void Session::remove(Component& c) {
+        auto toRemove = std::remove(comp.begin(), comp.end(), &c);
+
+        if (toRemove != comp.end()) {
+            comp.erase(toRemove, comp.end());
+        }
+    }
 
     void Session::run(){
         bool quit = false;
@@ -65,6 +73,7 @@ namespace gameengine{
                 c->render();
             }
             SDL_RenderPresent(sys.getRen());
+            
         }
     }
 

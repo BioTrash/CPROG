@@ -21,6 +21,15 @@ namespace gameengine {
         const std::string& getId() const { return id; }
         virtual void updatePosition() {}
 
+        bool operator==(const Component& other) const {
+            // Compare attributes for equality
+            return (this->getRect().x == other.getRect().x) &&
+            (this->getRect().y == other.getRect().y) &&
+            (this->getRect().w == other.getRect().w) &&
+            (this->getRect().h == other.getRect().h) &&
+            (this->getId() == other.getId());
+        }      
+
     protected:
         Component(int x, int y, int w, int h, std::string id);
 

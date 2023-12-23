@@ -7,6 +7,8 @@ namespace gameengine{
     class Session{
         public:
             void add(Component* c);
+            void remove(Component& c);
+            //void triggerRemove(Component* c);
             void run();
             const std::vector<Component*> getComp() const { return comp; }
             ~Session();  
