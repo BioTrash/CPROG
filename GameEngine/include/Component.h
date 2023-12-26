@@ -28,7 +28,21 @@ namespace gameengine {
             (this->getRect().w == other.getRect().w) &&
             (this->getRect().h == other.getRect().h) &&
             (this->getId() == other.getId());
-        }      
+        }   
+
+        template <typename T>
+        const bool isTouching(T* target) const {
+
+        
+        SDL_Rect rect1 = this->getRect();
+        SDL_Rect rect2 = target->getRect();
+
+        // Check if the rectangles overlap
+        if (SDL_HasIntersection(&rect1, &rect2)) { return true; }
+
+        // No collision detected
+        return false;
+    }   
 
     protected:
         Component(int x, int y, int w, int h, std::string id);

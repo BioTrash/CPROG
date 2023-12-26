@@ -14,9 +14,6 @@ namespace gameengine {
         static Character* getCopy(const Character& other);
         ~Character();
         Uint32* getPixel() const { return static_cast<Uint32*>(surf->pixels); };
-        
-        template <typename T>
-        const bool isTouching(T* target) const;
 
         void render() const;
         void updatePosition() override;

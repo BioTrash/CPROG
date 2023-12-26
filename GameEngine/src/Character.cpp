@@ -37,23 +37,6 @@ namespace gameengine{
         
     }
 
-    template const bool Character::isTouching<Character>(Character* target) const;
-    template const bool Character::isTouching<Projectile>(Projectile* target) const;
-
-    template <typename T>
-    const bool Character::isTouching(T* target) const {
-
-        
-        SDL_Rect rect1 = this->getRect();
-        SDL_Rect rect2 = target->getRect();
-
-        // Check if the rectangles overlap
-        if (SDL_HasIntersection(&rect1, &rect2)) { return true; }
-
-        // No collision detected
-        return false;
-    }
-
     void Character::render() const {
         SDL_RenderCopy(sys.getRen(), texture, NULL, &getRect());
     }
