@@ -18,11 +18,7 @@ int main(int argc, char** argv) {
 
     Character* enemy = Character::getInstance(0, 0, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", 10, "Enemy");
 
-    Projectile* projectile = Projectile::getInstance(200, 400, 100, 100, "Projectile", "/home/rufus/SU/CPROG/GameEngine/resources/images/projectile.png", 100);
-
-    projectile->setBehaviour([](Projectile& target){
-        target.setRect().y--;
-    });
+    Projectile* projectile = Projectile::getInstance(10, 10, 10, 10, "Projectile", "/home/rufus/SU/CPROG/GameEngine/resources/images/projectile.png", 10);
 
     enemy->setBehaviour([mc, projectile, ses](Character& target) {
         target.setRect().y++;
@@ -36,6 +32,10 @@ int main(int argc, char** argv) {
     }); 
 
     Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 100, 1, ses, mc, projectile, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png");
+
+    weapon->setBehaviour([&](Weapon& targetWeapon){
+        targetWeapon.destroyOnCollision<Projectile, Character>("Projectile", "Enemy");
+    });
 
     ses.add(weapon);
 
