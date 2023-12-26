@@ -37,27 +37,6 @@ namespace gameengine{
         if(behaviourFunction) { //Has to be after target if-statement
             behaviourFunction(*this);
         }
-        else{
-            for(Component* projC : ses.getComp()){ //Need to be moved and made more flexible. This can be default but it need to be able to change. Set this as starting weapon behaviourFunction.
-                if(projC->getId() == "Projectile"){
-                    Projectile* proj = dynamic_cast<Projectile*>(projC);
-                    for(Component* enemyC : ses.getComp()){
-                        if(enemyC->getId() == "Enemy"){
-                            Character* tempEnemy = dynamic_cast<Character*>(enemyC);
-
-                            if(tempEnemy->isTouching(proj)){
-                                tempEnemy->setBehaviour([&](Character& tempTarget){
-                                    ses.remove(tempTarget);
-                                });
-                                proj->setBehaviour([&](Projectile& tempTarget){
-                                    ses.remove(tempTarget);
-                                });     
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         if(proj != nullptr){
             int characterCheck = 0;
