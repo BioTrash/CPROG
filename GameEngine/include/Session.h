@@ -11,9 +11,12 @@ namespace gameengine{
             //void triggerRemove(Component* c);
             void run();
             const std::vector<Component*> getComp() const { return comp; }
+
+            void changeBackground(const char* backgroundPath) { imagePath = backgroundPath; }
             ~Session();  
         private:
             std::vector<Component*> comp;
+            const char* imagePath = nullptr;
     };
 }
 

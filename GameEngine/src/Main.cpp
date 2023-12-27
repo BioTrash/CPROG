@@ -12,11 +12,13 @@ int main(int argc, char** argv) {
 
     Session ses;
 
-    Character* mc = Character::getInstance(400, 200, 50, 50, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png", 10, "Main Character", true, true);
+    ses.changeBackground("/home/rufus/SU/CPROG/GameEngine/resources/images/spaceBG.jpg");
+
+    Character* mc = Character::getInstance(400, 200, 1089/15, 1920/15, "/home/rufus/SU/CPROG/GameEngine/resources/images/spaceShip.png", 10, "Main Character", true, true);
 
     ses.add(mc);
 
-    Character* enemy = Character::getInstance(0, 0, 100, 100, "/home/rufus/SU/CPROG/GameEngine/resources/images/greenCircle.png", 10, "Enemy");
+    Character* enemy = Character::getInstance(0, 0, 505/10, 361/10, "/home/rufus/SU/CPROG/GameEngine/resources/images/alien.png", 10, "Enemy");
 
     Projectile* projectile = Projectile::getInstance(10, 10, 10, 10, "Projectile", "/home/rufus/SU/CPROG/GameEngine/resources/images/projectile.png", 10);
 
@@ -31,7 +33,9 @@ int main(int argc, char** argv) {
         }
     }); 
 
-    Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 100, 1, ses, mc, projectile, "/home/rufus/SU/CPROG/GameEngine/resources/images/redCircle.png");
+    Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 100, 1, ses, mc, projectile);
+
+    //A controller class may need to be implemented
 
     weapon->setBehaviour([&](Weapon& targetWeapon){
         targetWeapon.destroyOnCollision<Projectile, Character>("Projectile", "Enemy");

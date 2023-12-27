@@ -1,6 +1,7 @@
 #include "Session.h"
 #include "System.h"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 #define FPS 60
 
@@ -23,6 +24,11 @@ namespace gameengine{
         const int tickInterval = 1000/FPS;
         Uint32 nextTick;
         int delay;
+
+        SDL_Texture* backgroundTexture = nullptr;
+        if(imagePath != nullptr){
+            backgroundTexture = IMG_LoadTexture(sys.getRen(), imagePath);
+        }
 
         while (!quit){
             nextTick = SDL_GetTicks() + tickInterval;
@@ -65,16 +71,26 @@ namespace gameengine{
             delay = nextTick - SDL_GetTicks();
             if(delay > 0) SDL_Delay(delay);
 
-            SDL_SetRenderDrawColor(sys.getRen(), 255, 255, 255, 255);
-
-            SDL_RenderClear(sys.getRen());
+            if(backgroundTexture){
+                SDL_RenderCopy(sys.getRen(), backgroundTexture, NULL, NULL);
+            }
+            else{
+                SDL_SetRenderDrawColor(sys.getRen(), 255, 255, 255, 255);
+            }
 
             for(Component* c : comp){
                 c->render();
             }
-            SDL_RenderPresent(sys.getRen());
             
+            SDL_RenderPresent(sys.getRen());
+
+            SDL_RenderClear(sys.getRen());
         }
+
+        if(backgroundTexture){
+            SDL_DestroyTexture(backgroundTexture);
+        }
+
     }
 
     Session::~Session(){
