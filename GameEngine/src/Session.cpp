@@ -78,7 +78,7 @@ namespace gameengine{
                 SDL_SetRenderDrawColor(sys.getRen(), 255, 255, 255, 255);
             }
 
-            for(Component* c : comp){
+            for(Component* c : comp){ //Render order is important
                 c->render();
             }
             
