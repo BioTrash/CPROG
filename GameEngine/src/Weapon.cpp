@@ -18,12 +18,14 @@ namespace gameengine{
     }
 
     Weapon::~Weapon(){
-        //if(imagePath != NULL) SDL_FreeSurface(surf);
+        if(imagePath != NULL) { 
+            SDL_FreeSurface(surf);
+        } 
     }
 
-    void Weapon::render() const {
+/*     void Weapon::render() const {
         SDL_RenderCopy(sys.getRen(), texture, NULL, &getRect());
-    }
+    } */
 
     void Weapon::updatePosition(){
         auto currentTime = std::chrono::high_resolution_clock::now();

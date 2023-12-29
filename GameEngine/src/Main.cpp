@@ -48,23 +48,42 @@ int main(int argc, char** argv) {
 
     Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 100, 1, ses, mc, projectile);
 
-    //A controller class may need to be implemented
-    int i = 0;
-    weapon->setBehaviour([&](Weapon& targetWeapon){
-       
-        if(targetWeapon.detectCollision<Projectile, Character>("Projectile", "Enemy")){
-            i++;
-            score->setText("Score: " + std::to_string(i));
-        }
-
-        targetWeapon.destroyOnCollision<Projectile, Character>("Projectile", "Enemy");
-    });
-
     ses.add(weapon);
 
     Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 5.0f);
 
     ses.add(spawner);
+
+    //Game Manager
+    Weapon* weaponManager = Weapon::getInstance(2, 2, 10, 10, "Manager", 1, 100, 1, ses);
+    int i = 0;
+    bool secondWeapon;
+    weaponManager->setBehaviour([&](Weapon& manager){
+
+        if(score->getContent() == "Score: " + std::to_string(5) && !secondWeapon){
+            secondWeapon = true;
+            Weapon* secondWeapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 100, 1, ses, mc, projectile); 
+
+            secondWeapon->setBehaviour([mc](Weapon& newWeapon){
+                newWeapon.setRect().x = mc->getRect().x;
+            });
+
+            weapon->setBehaviour([mc](Weapon& firstWeapon){
+                firstWeapon.setRect().x = mc->getRect().x + mc->getRect().w;
+            });
+
+            ses.add(secondWeapon);
+        }
+
+        if(manager.detectCollision<Projectile, Character>("Projectile", "Enemy")){
+            i++;
+            score->setText("Score: " + std::to_string(i));
+        }
+
+        manager.destroyOnCollision<Projectile, Character>("Projectile", "Enemy"); 
+    });
+
+    ses.add(weaponManager);
 
     ses.run();
 

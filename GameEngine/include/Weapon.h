@@ -15,7 +15,7 @@ namespace gameengine{
             ~Weapon();
             static Weapon* getInstance(int x, int y, int w, int h, std::string id, int speed, int amount, int spread, Session& ses, Character* target = nullptr, Projectile* proj = nullptr, const char* imagePath = NULL);
             //static Weapon* getCopy(const Weapon& other);
-            void render() const;
+            /* void render() const; */
             void updatePosition() override;
             void spawn(const std::function<void(Projectile&)>& behaviorFunction);
             
