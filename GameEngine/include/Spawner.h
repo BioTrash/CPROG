@@ -30,6 +30,8 @@ namespace gameengine {
         float time;
         std::chrono::high_resolution_clock::time_point lastUpdateTime;
         std::default_random_engine engine;
+
+        //int characterCheck = 0;
     };
 }
 

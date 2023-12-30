@@ -16,6 +16,7 @@ namespace gameengine {
             void render() const;
             /* const bool isTouching(Character* target) const; */
             Uint32* getPixel() const { return static_cast<Uint32*>(surf->pixels); };
+            int getSpeed() const { return speed; };
 
             void setBehaviour(const std::function<void(Projectile&)>& behaviour) { behaviourFunction = behaviour; };
             const std::function<void(Projectile&)>& getBehaviour() { return behaviourFunction; };

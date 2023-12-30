@@ -19,6 +19,7 @@ namespace gameengine {
         const SDL_Rect& getRect() const { return rect; }
         SDL_Rect& setRect() { return rect; }
         const std::string& getId() const { return id; }
+        void setID(std::string newID){ id = newID; };
         virtual void updatePosition() {}
 
         bool operator==(const Component& other) const {

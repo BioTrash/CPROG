@@ -21,12 +21,11 @@ namespace gameengine {
         auto currentTime = std::chrono::high_resolution_clock::now();
         auto elapsedSeconds = std::chrono::duration_cast<std::chrono::seconds>(currentTime - lastUpdateTime).count();
 
-        int characterCheck = 0;
-        for(Component* c: ses.getComp()){
-            if(c->getId() == target->getId()) characterCheck++;
-        }
+/*         for(Component* c: ses.getComp()){
+            if(c->getId() == target->getId()) {characterCheck++;}
+        } */
 
-        if (elapsedSeconds >= time && characterCheck < amount) {
+        if (elapsedSeconds >= time/*  && characterCheck < amount */) {
 
             lastUpdateTime = currentTime;
 

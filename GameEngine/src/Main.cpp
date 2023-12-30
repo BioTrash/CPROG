@@ -46,23 +46,25 @@ int main(int argc, char** argv) {
         target.setRect().y++;
     }); 
 
-    Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 100, 1, ses, mc, projectile);
+    Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 1000, 1, ses, mc, projectile);
 
     ses.add(weapon);
 
-    Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 10, 5.0f);
+    Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
 
     ses.add(spawner);
 
     //Game Manager
-    Weapon* weaponManager = Weapon::getInstance(2, 2, 10, 10, "Manager", 1, 100, 1, ses);
+    Weapon* weaponManager = Weapon::getInstance(2, 2, 10, 10, "Manager", 1, 1000, 1, ses);
+    Weapon* secondWeapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 1000, 1, ses, mc, projectile); 
+    Weapon* thirdWeapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 1000, 1, ses, mc, projectile); 
+    
     int i = 0;
-    bool secondWeapon;
+    bool secondWeaponBool, thirdWeaponBool, secondSpawnerBool, thirdSpawnerBool, secondProjectileBool;
     weaponManager->setBehaviour([&](Weapon& manager){
 
-        if(score->getContent() == "Score: " + std::to_string(5) && !secondWeapon){
-            secondWeapon = true;
-            Weapon* secondWeapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 100, 1, ses, mc, projectile); 
+        if(score->getContent() == "Score: " + std::to_string(5) && !secondWeaponBool){
+            secondWeaponBool = true;
 
             secondWeapon->setBehaviour([mc](Weapon& newWeapon){
                 newWeapon.setRect().x = mc->getRect().x;
@@ -75,12 +77,43 @@ int main(int argc, char** argv) {
             ses.add(secondWeapon);
         }
 
-        if(manager.detectCollision<Projectile, Character>("Projectile", "Enemy")){
+        if(score->getContent() == "Score: " + std::to_string(10) && !thirdWeaponBool){
+            thirdWeaponBool = true;
+
+            thirdWeapon->setBehaviour([mc](Weapon& newWeapon){
+                newWeapon.setRect().x = mc->getRect().x + mc->getRect().w/2;
+            });
+
+            ses.add(thirdWeapon);
+        }
+
+        if(score->getContent() == "Score: " + std::to_string(20) && !secondProjectileBool){
+            secondProjectileBool = true;
+
+            //Write something here
+
+        }
+
+        if(time->getContent() == "Time: " + std::to_string(15) && !secondSpawnerBool){
+            secondSpawnerBool = true;
+            Spawner* secondSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
+            ses.add(secondSpawner);
+        }
+
+        if(time->getContent() == "Time: " + std::to_string(30) && !thirdSpawnerBool){
+            thirdSpawnerBool = true;
+            Spawner* thirdSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
+            ses.add(thirdSpawner);
+        }
+
+        if(manager.detectCollision<Projectile, Character>("Projectile", "Enemy")
+        || manager.detectCollision<Projectile, Character>("SecondProjectile", "Enemy")){
             i++;
             score->setText("Score: " + std::to_string(i));
         }
 
         manager.destroyOnCollision<Projectile, Character>("Projectile", "Enemy"); 
+        manager.destroyOnCollision<Projectile, Character>("SecondProjectile", "Enemy"); 
     });
 
     ses.add(weaponManager);

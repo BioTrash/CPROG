@@ -5,6 +5,7 @@
 #include "Session.h"
 #include "Projectile.h"
 #include <string>
+#include <utility>
 #include <chrono>
 #include <functional>
 #include <SDL2/SDL.h>
@@ -18,12 +19,13 @@ namespace gameengine{
             /* void render() const; */
             void updatePosition() override;
             void spawn(const std::function<void(Projectile&)>& behaviorFunction);
+            void setProjectile(Projectile* newProj) { proj = newProj; };
             
             void setBehaviour(const std::function<void(Weapon&)>& behaviour) { behaviourFunction = behaviour; };
             const std::function<void(Weapon&)>& getBehaviour() { return behaviourFunction; };
 
             template <typename T, typename U>
-            void destroyOnCollision(std::string param1ID, std::string param2ID){
+            void destroyOnCollision(std::string param1ID, std::string param2ID, bool destroyBoth = true){
                 for(Component* c : ses.getComp()){
                     if(c->getId() == param1ID){
                         T* foundC = dynamic_cast<T*>(c);
@@ -33,8 +35,13 @@ namespace gameengine{
                                 U* foundOtherC = dynamic_cast<U*>(otherC);
 
                                 if(foundOtherC->isTouching(foundC)){
-                                    ses.remove(*c);
-                                    ses.remove(*otherC);
+
+                                    if(!destroyBoth){ses.remove(*otherC);}
+                                    else{
+                                        ses.remove(*c);
+                                        ses.remove(*otherC);
+                                    }
+
                                 }
                             }
                         }
