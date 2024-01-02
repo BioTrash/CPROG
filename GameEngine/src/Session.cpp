@@ -1,6 +1,8 @@
 #include "Session.h"
 #include "System.h"
 #include <SDL2/SDL.h>
+#include <iostream>
+#include <vector>
 #include <SDL2/SDL_image.h>
 
 #define FPS 60
@@ -8,15 +10,11 @@
 namespace gameengine{
 
     void Session::add(Component* c){
-        comp.push_back(c);
+        added.push_back(c);
     }
     
-    void Session::remove(Component& c) {
-        auto toRemove = std::remove(comp.begin(), comp.end(), &c);
-
-        if (toRemove != comp.end()) {
-            comp.erase(toRemove, comp.end());
-        }
+    void Session::remove(Component* c) {
+        removed.push_back(c);
     }
 
     void Session::run(){
@@ -64,13 +62,36 @@ namespace gameengine{
                 }
             }
 
-            for (Component* c : comp) {
-            c->updatePosition();
-            }
-
             delay = nextTick - SDL_GetTicks();
             if(delay > 0) SDL_Delay(delay);
 
+            for (Component* c : comp) {
+                c->updatePosition();
+            }
+
+            for(Component* c : comp){
+                if(c->getRect().x < 0 || c->getRect().x >= sys.getWidth() || c->getRect().y < 0 || c->getRect().y >= sys.getHeight()){
+                    remove(c);
+                }
+            }
+
+            for(Component* c : added){
+                comp.push_back(c);
+            }
+            added.clear();
+
+            for(Component* c: removed){
+                for(std::vector<Component*>::iterator i = comp.begin(); i != comp.end();){
+                    if(*i == c ){
+                        i = comp.erase(i);
+                    }
+                    else{
+                        i++;
+                    }
+                }
+            }
+            removed.clear();
+            
             if(backgroundTexture){
                 SDL_RenderCopy(sys.getRen(), backgroundTexture, NULL, NULL);
             }

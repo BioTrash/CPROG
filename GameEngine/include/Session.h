@@ -7,7 +7,7 @@ namespace gameengine{
     class Session{
         public:
             void add(Component* c);
-            void remove(Component& c);
+            void remove(Component* c);
             //void triggerRemove(Component* c);
             void run();
             const std::vector<Component*> getComp() const { return comp; }
@@ -16,6 +16,8 @@ namespace gameengine{
             ~Session();  
         private:
             std::vector<Component*> comp;
+            std::vector<Component*> added;
+            std::vector<Component*> removed;
             const char* imagePath = nullptr;
     };
 }

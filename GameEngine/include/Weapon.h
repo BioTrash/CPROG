@@ -36,10 +36,10 @@ namespace gameengine{
 
                                 if(foundOtherC->isTouching(foundC)){
 
-                                    if(!destroyBoth){ses.remove(*otherC);}
+                                    if(!destroyBoth){ses.remove(otherC);}
                                     else{
-                                        ses.remove(*c);
-                                        ses.remove(*otherC);
+                                        ses.remove(c);
+                                        ses.remove(otherC);
                                     }
 
                                 }

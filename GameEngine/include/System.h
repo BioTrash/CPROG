@@ -11,11 +11,16 @@ namespace gameengine{
             SDL_Renderer* getRen() const;
             TTF_Font* getFont() const;
             SDL_Window* getWindow() const;
+            
+            int getHeight() { return winHeight; };
+            int getWidth() {return winWidth; };
 
         private:
             SDL_Window* win;
             SDL_Renderer* ren;
             TTF_Font* font;
+            int winHeight;
+            int winWidth;
     };
 
     extern System sys;
