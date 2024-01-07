@@ -10,15 +10,27 @@
 namespace gameengine{
 
     void Session::add(Component* c){
-        added.push_back(c);
+        int count = std::count(added.begin(), added.end(), c);
+
+        if (count == 0) {
+            added.push_back(c);
+        } 
     }
 
     void Session::protect(Component* c){
-        irremovable.push_back(c);
+        int count = std::count(irremovable.begin(), irremovable.end(), c);
+
+        if (count == 0) {
+            irremovable.push_back(c);
+        } 
     }
     
     void Session::remove(Component* c) {
-        removed.push_back(c);
+        int count = std::count(removed.begin(), removed.end(), c);
+
+        if (count == 0) {
+            removed.push_back(c);
+        } 
     }
 
     void Session::run(){

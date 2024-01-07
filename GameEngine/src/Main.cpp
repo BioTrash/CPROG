@@ -18,8 +18,6 @@ int main(int argc, char** argv) {
         Enemy speed and amount changes on certain time threasholds (implement a in-build timer) TIMER AND SCORE - DONE!
         Projectile/Weapon gets upgraded on certain enemy kill threashhold (implement in-build weapon/projectile swap)
         Game Over Screen
-        
-        BUG: When a bullet hits two enemies at the same time the game crashes. Possible solution is round about; make it impossible for two enemies to be in such close proximity that a bullet would be able to hit them both. Reason is because I'm not sure why this happens and I don't have time to try and find it, my theory is that it tries adding the bullet twice to removed vector i.e. it tries to remove bullet twice.
         */
 
     Session ses;
