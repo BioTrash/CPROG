@@ -17,7 +17,10 @@ int main(int argc, char** argv) {
         Set screen to a certain resolution (later)
         Enemy speed and amount changes on certain time threasholds (implement a in-build timer) TIMER AND SCORE - DONE!
         Projectile/Weapon gets upgraded on certain enemy kill threashhold (implement in-build weapon/projectile swap)
-        Game Over Screen*/
+        Game Over Screen
+        
+        BUG: When a bullet hits two enemies at the same time the game crashes. Possible solution is round about; make it impossible for two enemies to be in such close proximity that a bullet would be able to hit them both. Reason is because I'm not sure why this happens and I don't have time to try and find it, my theory is that it tries adding the bullet twice to removed vector i.e. it tries to remove bullet twice.
+        */
 
     Session ses;
 
@@ -37,6 +40,7 @@ int main(int argc, char** argv) {
     Character* mc = Character::getInstance(400, 200, 1089/15, 1920/15, "/home/rufus/SU/CPROG/GameEngine/resources/images/spaceShip.png", 10, "Main Character", true, true);
 
     ses.add(mc);
+    ses.protect(mc);
 
     Character* enemy = Character::getInstance(0, 0, 505/10, 361/10, "/home/rufus/SU/CPROG/GameEngine/resources/images/alien.png", 10, "Enemy");
 
@@ -49,6 +53,7 @@ int main(int argc, char** argv) {
     Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 1000, 1, ses, mc, projectile);
 
     ses.add(weapon);
+    ses.protect(weapon);
 
     Spawner* spawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
 
@@ -75,6 +80,7 @@ int main(int argc, char** argv) {
             });
 
             ses.add(secondWeapon);
+            ses.protect(secondWeapon);
         }
 
         if(score->getContent() == "Score: " + std::to_string(10) && !thirdWeaponBool){
@@ -85,6 +91,7 @@ int main(int argc, char** argv) {
             });
 
             ses.add(thirdWeapon);
+            ses.protect(thirdWeapon);
         }
 
         if(score->getContent() == "Score: " + std::to_string(20) && !secondProjectileBool){

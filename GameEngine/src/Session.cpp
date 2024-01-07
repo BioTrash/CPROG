@@ -12,6 +12,10 @@ namespace gameengine{
     void Session::add(Component* c){
         added.push_back(c);
     }
+
+    void Session::protect(Component* c){
+        irremovable.push_back(c);
+    }
     
     void Session::remove(Component* c) {
         removed.push_back(c);
@@ -71,7 +75,13 @@ namespace gameengine{
 
             for(Component* c : comp){
                 if(c->getRect().x < 0 || c->getRect().x >= sys.getWidth() || c->getRect().y < 0 || c->getRect().y >= sys.getHeight()){
-                    remove(c);
+                    auto it = std::find(irremovable.begin(), irremovable.end(), c);
+
+                    if (it != irremovable.end()) {
+                        continue;
+                    } else {
+                        remove(c);
+                    }
                 }
             }
 
@@ -81,14 +91,8 @@ namespace gameengine{
             added.clear();
 
             for(Component* c: removed){
-                for(std::vector<Component*>::iterator i = comp.begin(); i != comp.end();){
-                    if(*i == c ){
-                        i = comp.erase(i);
-                    }
-                    else{
-                        i++;
-                    }
-                }
+                comp.erase(std::remove(comp.begin(), comp.end(), c), comp.end());
+                delete c;
             }
             removed.clear();
             

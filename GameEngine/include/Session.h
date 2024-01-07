@@ -7,6 +7,7 @@ namespace gameengine{
     class Session{
         public:
             void add(Component* c);
+            void protect(Component* c);
             void remove(Component* c);
             //void triggerRemove(Component* c);
             void run();
@@ -18,6 +19,7 @@ namespace gameengine{
             std::vector<Component*> comp;
             std::vector<Component*> added;
             std::vector<Component*> removed;
+            std::vector<Component*> irremovable;
             const char* imagePath = nullptr;
     };
 }
