@@ -10,7 +10,7 @@
 namespace gameengine {
     class Character : public Component {
     public:
-        static Character* getInstance(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable = false, bool mControl = false);
+        static Character* getInstance(int x, int y, int w, int h, std::string imagePath, int speed, std::string id, bool controlable = false, bool mControl = false);
         static Character* getCopy(const Character& other);
         ~Character();
         Uint32* getPixel() const { return static_cast<Uint32*>(surf->pixels); };
@@ -25,10 +25,10 @@ namespace gameengine {
 
     protected:
         Character(const Character& other);
-        Character(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable = false, bool mControl = false);
+        Character(int x, int y, int w, int h, std::string imagePath, int speed, std::string id, bool controlable = false, bool mControl = false);
 
     private:
-        const char* imagePath;
+        std::string imagePath;
         int speed;
         bool controlable;
         bool mControl;

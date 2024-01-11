@@ -14,7 +14,7 @@ namespace gameengine{
     class Weapon : public Component {
         public:
             ~Weapon();
-            static Weapon* getInstance(int x, int y, int w, int h, std::string id, int speed, int amount, int spread, Session& ses, Character* target = nullptr, Projectile* proj = nullptr, const char* imagePath = NULL);
+            static Weapon* getInstance(int x, int y, int w, int h, std::string id, int speed, int amount, int spread, Session& ses, Character* target = nullptr, Projectile* proj = nullptr, std::string imagePath = "");
             //static Weapon* getCopy(const Weapon& other);
             /* void render() const; */
             void updatePosition() override;
@@ -71,7 +71,7 @@ namespace gameengine{
             }
 
         protected:
-            Weapon(int x, int y, int w, int h, std::string id, int speed, int amount, int spread, Session& ses, Character* target = nullptr, Projectile* proj = nullptr, const char* imagePath = NULL);
+            Weapon(int x, int y, int w, int h, std::string id, int speed, int amount, int spread, Session& ses, Character* target = nullptr, Projectile* proj = nullptr, std::string imagePath = "");
             //Weapon(const Weapon& other);
         private:   
             int speed;
@@ -80,7 +80,7 @@ namespace gameengine{
             Session& ses;
             Character* target;
             Projectile* proj;
-            const char* imagePath;
+            std::string imagePath;
 
             SDL_Surface* surf;
             SDL_Texture* texture;

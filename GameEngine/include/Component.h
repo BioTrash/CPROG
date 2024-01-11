@@ -33,7 +33,6 @@ namespace gameengine {
 
         template <typename T>
         const bool isTouching(T* target) const {
-
         
         SDL_Rect rect1 = this->getRect();
         SDL_Rect rect2 = target->getRect();

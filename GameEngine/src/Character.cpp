@@ -7,7 +7,7 @@
 
 namespace gameengine{
 
-    Character* Character::getInstance(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable, bool mControl){
+    Character* Character::getInstance(int x, int y, int w, int h, std::string imagePath, int speed, std::string id, bool controlable, bool mControl){
         return new Character(x, y, w, h, imagePath, speed, id, controlable, mControl);
     }
 
@@ -15,8 +15,8 @@ namespace gameengine{
         return new Character(other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.imagePath, other.speed, other.getId(), other.controlable, other.mControl);
     }
     
-    Character::Character(int x, int y, int w, int h, const char* imagePath, int speed, std::string id, bool controlable, bool mControl): Component{x,y,w,h, id}, imagePath(imagePath), speed(speed), controlable(controlable), mControl(mControl){
-        surf = IMG_Load(imagePath);
+    Character::Character(int x, int y, int w, int h, std::string imagePath, int speed, std::string id, bool controlable, bool mControl): Component{x,y,w,h, id}, imagePath(imagePath), speed(speed), controlable(controlable), mControl(mControl){
+        surf = IMG_Load(imagePath.c_str());
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
 
         if(mControl && controlable){
@@ -27,7 +27,7 @@ namespace gameengine{
     }
 
     Character::Character(const Character& other) : Component{ other.getRect().x, other.getRect().y, other.getRect().w, other.getRect().h, other.getId()}, imagePath(other.imagePath), speed(other.speed), controlable(other.controlable), mControl(other.mControl){
-        surf = IMG_Load(imagePath);
+        surf = IMG_Load(imagePath.c_str());
         texture = SDL_CreateTextureFromSurface(sys.getRen(), surf);
 
         if(mControl && controlable){

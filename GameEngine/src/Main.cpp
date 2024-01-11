@@ -18,9 +18,7 @@ int main(int argc, char** argv) {
  
     Session ses;
 
-    ses.changeBackground((constants::gResPath + "images/spaceBG.jpg").c_str());
-
-    std::cout << (constants::gResPath + "images/spaceBG.jpg").c_str() << std::endl;
+    ses.changeBackground(constants::gResPath + "images/spaceBG.jpg");
 
     Label* time = Label::getInstance(20, 20, 20, 40, "Time: 0", "Timer");
     time->setColor(255, 255, 255);
@@ -33,14 +31,14 @@ int main(int argc, char** argv) {
 
     ses.add(score);
 
-    Character* mc = Character::getInstance(400, 200, 1089/15, 1920/15, "/home/rufus/SU/CPROG/GameEngine/resources/images/spaceShip.png", 10, "Main Character", true, true);
+    Character* mc = Character::getInstance(400, 200, 1089/15, 1920/15, constants::gResPath + "images/spaceShip.png", 10, "Main Character", true, true);
 
     ses.add(mc);
     ses.protect(mc);
 
-    Character* enemy = Character::getInstance(0, 0, 505/10, 361/10, "/home/rufus/SU/CPROG/GameEngine/resources/images/alien.png", 10, "Enemy");
+    Character* enemy = Character::getInstance(0, 0, 505/10, 361/10, constants::gResPath + "images/alien.png", 10, "Enemy");
 
-    Projectile* projectile = Projectile::getInstance(10, 10, 10, 10, "Projectile", "/home/rufus/SU/CPROG/GameEngine/resources/images/projectile.png", 10);
+    Projectile* projectile = Projectile::getInstance(10, 10, 10, 10, "Projectile", constants::gResPath + "images/projectile.png", 10);
 
     enemy->setBehaviour([mc, time, projectile, ses](Character& target) {
         target.setRect().y++;

@@ -1,4 +1,5 @@
 #include "System.h"
+#include "Constants.h"
 #include <SDL2/SDL.h>
 
 namespace gameengine{
@@ -10,7 +11,7 @@ namespace gameengine{
         SDL_GetWindowSize(win, &winWidth, &winHeight);
         
         TTF_Init();
-        font = TTF_OpenFont("/usr/share/fonts/truetype/noto/NotoSansMono-Regular.ttf", 36);
+        font = TTF_OpenFont((constants::gResPath + "fonts/NotoSansMono-Regular.ttf").c_str(), 36);
 
     }
 
