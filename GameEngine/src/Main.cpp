@@ -6,23 +6,21 @@
 #include "Weapon.h"
 #include "Label.h"
 #include "Projectile.h"
+#include "Constants.h"
 
 using namespace gameengine;
 
 int main(int argc, char** argv) {
 
     /*GAME TODO:
-        
-        Enemy dies when off-screen (later)
-        Set screen to a certain resolution (later)
-        Enemy speed and amount changes on certain time threasholds (implement a in-build timer) TIMER AND SCORE - DONE!
-        Projectile/Weapon gets upgraded on certain enemy kill threashhold (implement in-build weapon/projectile swap)
         Game Over Screen
         */
-
+ 
     Session ses;
 
-    ses.changeBackground("/home/rufus/SU/CPROG/GameEngine/resources/images/spaceBG.jpg");
+    ses.changeBackground((constants::gResPath + "images/spaceBG.jpg").c_str());
+
+    std::cout << (constants::gResPath + "images/spaceBG.jpg").c_str() << std::endl;
 
     Label* time = Label::getInstance(20, 20, 20, 40, "Time: 0", "Timer");
     time->setColor(255, 255, 255);
@@ -59,6 +57,7 @@ int main(int argc, char** argv) {
 
     //Game Manager
     Weapon* weaponManager = Weapon::getInstance(2, 2, 10, 10, "Manager", 1, 1000, 1, ses);
+
     Weapon* secondWeapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 1000, 1, ses, mc, projectile); 
     Weapon* thirdWeapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 1000, 1, ses, mc, projectile); 
     

@@ -40,8 +40,8 @@ namespace gameengine{
         int delay;
 
         SDL_Texture* backgroundTexture = nullptr;
-        if(imagePath != nullptr){
-            backgroundTexture = IMG_LoadTexture(sys.getRen(), imagePath);
+        if(!imagePath.empty()){
+            backgroundTexture = IMG_LoadTexture(sys.getRen(), imagePath.c_str());
         }
 
         while (!quit){
