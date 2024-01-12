@@ -14,7 +14,10 @@ namespace gameengine{
 
         if (count == 0) {
             added.push_back(c);
-        } 
+        }
+        else{
+            return;
+        }
     }
 
     void Session::protect(Component* c){
@@ -22,7 +25,10 @@ namespace gameengine{
 
         if (count == 0) {
             irremovable.push_back(c);
-        } 
+        }
+        else{
+            return;
+        }
     }
     
     void Session::remove(Component* c) {
@@ -30,7 +36,10 @@ namespace gameengine{
 
         if (count == 0) {
             removed.push_back(c);
-        } 
+        }
+        else{
+            return;
+        }
     }
 
     void Session::run(){

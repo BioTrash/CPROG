@@ -60,62 +60,134 @@ int main(int argc, char** argv) {
     Weapon* thirdWeapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 1000, 1, ses, mc, projectile); 
     
     int i = 0;
-    bool secondWeaponBool, thirdWeaponBool, secondSpawnerBool, thirdSpawnerBool, secondProjectileBool;
+    int spawnerCount = 1;
     weaponManager->setBehaviour([&](Weapon& manager){
 
-        if(score->getContent() == "Score: " + std::to_string(5) && !secondWeaponBool){
-            secondWeaponBool = true;
+        if((score->getContent() == "Score: " + std::to_string(5) || score->getContent() == "Score: " + std::to_string(50))){
 
             secondWeapon->setBehaviour([mc](Weapon& newWeapon){
                 newWeapon.setRect().x = mc->getRect().x;
             });
 
             weapon->setBehaviour([mc](Weapon& firstWeapon){
-                firstWeapon.setRect().x = mc->getRect().x + mc->getRect().w;
+                firstWeapon.setRect().x = mc->getRect().x + mc->getRect().w/2;
             });
 
             ses.add(secondWeapon);
             ses.protect(secondWeapon);
+            secondWeapon->setProjectile(projectile);
         }
 
-        if(score->getContent() == "Score: " + std::to_string(10) && !thirdWeaponBool){
-            thirdWeaponBool = true;
+        if((score->getContent() == "Score: " + std::to_string(10) || score->getContent() == "Score: " + std::to_string(100))){
 
             thirdWeapon->setBehaviour([mc](Weapon& newWeapon){
-                newWeapon.setRect().x = mc->getRect().x + mc->getRect().w/2;
+                newWeapon.setRect().x = mc->getRect().x + mc->getRect().w;
             });
 
             ses.add(thirdWeapon);
             ses.protect(thirdWeapon);
+            thirdWeapon->setProjectile(projectile);
         }
 
-        if(score->getContent() == "Score: " + std::to_string(20) && !secondProjectileBool){
-            secondProjectileBool = true;
+        if(score->getContent() == "Score: " + std::to_string(20)){
 
-            //Write something here
+            projectile->setBehaviour([&](Projectile& proj){
+                if(manager.detectCollision<Projectile, Character>("Projectile", "Enemy")){
+                    Projectile* tempProj = Projectile::getCopy(proj);
+                    tempProj->setID("SecondProjectile");
 
+                    tempProj->setRect().x = manager.returnLeft<Projectile, Character>("Projectile", "Enemy")->getRect().x;
+                    tempProj->setRect().y = manager.returnLeft<Projectile, Character>("Projectile", "Enemy")->getRect().y;
+
+                    tempProj->setBehaviour([](Projectile& newProj){
+                        newProj.setRect().x += newProj.getSpeed();
+                        newProj.setRect().y += newProj.getSpeed();
+                    });
+
+                    i++;
+                    score->setText("Score: " + std::to_string(i));
+
+                    manager.destroyOnCollision<Projectile, Character>("Projectile", "Enemy"); 
+
+                    ses.add(tempProj);
+                }
+            });
+
+            secondWeapon->setProjectile(nullptr);
+            thirdWeapon->setProjectile(nullptr);
         }
 
-        if(time->getContent() == "Time: " + std::to_string(15) && !secondSpawnerBool){
-            secondSpawnerBool = true;
+        if(score->getContent() == "Score: " + std::to_string(30)){
+
+            projectile->setBehaviour([&](Projectile& proj){
+                if(manager.detectCollision<Projectile, Character>("Projectile", "Enemy")){
+                    Projectile* tempProj = Projectile::getCopy(proj);
+                    tempProj->setID("SecondProjectile");
+
+                    Projectile* secondTempProj = Projectile::getCopy(proj);
+                    secondTempProj->setID("ThirdProjectile");
+
+                    tempProj->setRect().x = manager.returnLeft<Projectile, Character>("Projectile", "Enemy")->getRect().x;
+                    tempProj->setRect().y = manager.returnLeft<Projectile, Character>("Projectile", "Enemy")->getRect().y;
+
+                    secondTempProj->setRect().x = manager.returnLeft<Projectile, Character>("Projectile", "Enemy")->getRect().x;
+                    secondTempProj->setRect().y = manager.returnLeft<Projectile, Character>("Projectile", "Enemy")->getRect().y;
+
+                    tempProj->setBehaviour([](Projectile& newProj){
+                        newProj.setRect().x += newProj.getSpeed();
+                        newProj.setRect().y += newProj.getSpeed();
+                    });
+
+                    secondTempProj->setBehaviour([](Projectile& newProj){
+                        newProj.setRect().x -= newProj.getSpeed();
+                        newProj.setRect().y += newProj.getSpeed();
+                    });
+
+                    i++;
+                    score->setText("Score: " + std::to_string(i));
+
+                    manager.destroyOnCollision<Projectile, Character>("Projectile", "Enemy"); 
+
+                    ses.add(tempProj);
+                    ses.add(secondTempProj);
+                }
+            });
+        }
+
+        if(time->getContent() == "Time: " + std::to_string(15) && spawnerCount == 1){
             Spawner* secondSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
             ses.add(secondSpawner);
+            spawnerCount++;
         }
 
-        if(time->getContent() == "Time: " + std::to_string(30) && !thirdSpawnerBool){
-            thirdSpawnerBool = true;
+        if(time->getContent() == "Time: " + std::to_string(30) && spawnerCount == 2){
             Spawner* thirdSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
             ses.add(thirdSpawner);
+            spawnerCount++;
+        }
+
+        if(time->getContent() == "Time: " + std::to_string(45) && spawnerCount == 3){
+            Spawner* fourthSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
+            ses.add(fourthSpawner);
+            spawnerCount++;
+        }
+
+        if(time->getContent() == "Time: " + std::to_string(60) && spawnerCount == 4){
+            Spawner* fifthSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 100, 1.0f);
+            ses.add(fifthSpawner);
+            spawnerCount++;
         }
 
         if(manager.detectCollision<Projectile, Character>("Projectile", "Enemy")
-        || manager.detectCollision<Projectile, Character>("SecondProjectile", "Enemy")){
+        || manager.detectCollision<Projectile, Character>("SecondProjectile", "Enemy")
+        || manager.detectCollision<Projectile, Character>("ThirdProjectile", "Enemy")){
             i++;
             score->setText("Score: " + std::to_string(i));
         }
 
         manager.destroyOnCollision<Projectile, Character>("Projectile", "Enemy"); 
         manager.destroyOnCollision<Projectile, Character>("SecondProjectile", "Enemy"); 
+        manager.destroyOnCollision<Projectile, Character>("ThirdProjectile", "Enemy"); 
     });
 
     ses.add(weaponManager);

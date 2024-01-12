@@ -70,6 +70,27 @@ namespace gameengine{
                 return false;
             }
 
+            template <typename T, typename U>
+            T* returnLeft(std::string param1ID, std::string param2ID){
+                for(Component* c : ses.getComp()){
+                    if(c->getId() == param1ID){
+                        T* foundC = dynamic_cast<T*>(c);
+
+                        for(Component* otherC : ses.getComp()){
+                            if(otherC->getId() == param2ID){
+                                U* foundOtherC = dynamic_cast<U*>(otherC);
+
+                                if(foundOtherC->isTouching(foundC)){
+                                    return foundC;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return nullptr;
+            }
+
         protected:
             Weapon(int x, int y, int w, int h, std::string id, int speed, int amount, int spread, Session& ses, Character* target = nullptr, Projectile* proj = nullptr, std::string imagePath = "");
             //Weapon(const Weapon& other);
