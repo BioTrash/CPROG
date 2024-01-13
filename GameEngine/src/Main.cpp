@@ -1,5 +1,4 @@
-#include <SDL2/SDL.h>
-#include <iostream>
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #include "Session.h"
 #include "Character.h"
 #include "Spawner.h"
@@ -7,6 +6,8 @@
 #include "Label.h"
 #include "Projectile.h"
 #include "Constants.h"
+#include <SDL2/SDL.h>
+#include <iostream>
 
 using namespace gameengine;
 

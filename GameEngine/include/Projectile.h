@@ -1,10 +1,11 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
+
 #include "Component.h"
 #include "Character.h"
 #include <functional>
 #include <SDL2/SDL.h>
-
 
 namespace gameengine {
     class Projectile : public Component{
@@ -14,7 +15,6 @@ namespace gameengine {
             static Projectile* getCopy(const Projectile& other);
             void updatePosition() override;
             void render() const;
-            /* const bool isTouching(Character* target) const; */
             Uint32* getPixel() const { return static_cast<Uint32*>(surf->pixels); };
             int getSpeed() const { return speed; };
 

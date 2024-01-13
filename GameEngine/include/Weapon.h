@@ -1,5 +1,7 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #ifndef WEAPON_H
 #define WEAPON_H
+
 #include "Character.h"
 #include "Component.h"
 #include "Session.h"
@@ -15,8 +17,6 @@ namespace gameengine{
         public:
             ~Weapon();
             static Weapon* getInstance(int x, int y, int w, int h, std::string id, int speed, int amount, int spread, Session& ses, Character* target = nullptr, Projectile* proj = nullptr, std::string imagePath = "");
-            //static Weapon* getCopy(const Weapon& other);
-            /* void render() const; */
             void updatePosition() override;
             void spawn(const std::function<void(Projectile&)>& behaviorFunction);
             void setProjectile(Projectile* newProj) { proj = newProj; };
@@ -70,8 +70,9 @@ namespace gameengine{
                 return false;
             }
 
+            /* Unused in main game but is theoretically useful nonetheless if you want to get property of a specific instance of a dynamically created object*/
             template <typename T, typename U>
-            T* returnLeft(std::string param1ID, std::string param2ID){
+            T* returnLeft(std::string param1ID, std::string param2ID){ 
                 for(Component* c : ses.getComp()){
                     if(c->getId() == param1ID){
                         T* foundC = dynamic_cast<T*>(c);
@@ -93,7 +94,6 @@ namespace gameengine{
 
         protected:
             Weapon(int x, int y, int w, int h, std::string id, int speed, int amount, int spread, Session& ses, Character* target = nullptr, Projectile* proj = nullptr, std::string imagePath = "");
-            //Weapon(const Weapon& other);
         private:   
             int speed;
             int amount;

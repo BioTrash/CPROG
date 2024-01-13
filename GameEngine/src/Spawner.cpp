@@ -1,3 +1,4 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #include "Spawner.h"
 
 namespace gameengine {
@@ -14,18 +15,14 @@ namespace gameengine {
     }
 
     Spawner::~Spawner() {
-        // Implementation of destructor
+        
     }
 
     void Spawner::updatePosition() {
         auto currentTime = std::chrono::high_resolution_clock::now();
         auto elapsedSeconds = std::chrono::duration_cast<std::chrono::seconds>(currentTime - lastUpdateTime).count();
 
-/*         for(Component* c: ses.getComp()){
-            if(c->getId() == target->getId()) {characterCheck++;}
-        } */
-
-        if (elapsedSeconds >= time/*  && characterCheck < amount */) {
+        if (elapsedSeconds >= time) {
 
             lastUpdateTime = currentTime;
 

@@ -1,4 +1,4 @@
-// Character.h
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #ifndef CHARACTER_H
 #define CHARACTER_H
 

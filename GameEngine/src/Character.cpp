@@ -1,3 +1,4 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #include "Character.h"
 #include "System.h"
 #include "Projectile.h"

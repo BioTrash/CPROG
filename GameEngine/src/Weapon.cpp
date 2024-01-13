@@ -1,3 +1,4 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #include "Weapon.h"
 #include "System.h"
 #include <SDL2/SDL_image.h>
@@ -22,10 +23,6 @@ namespace gameengine{
             SDL_FreeSurface(surf);
         } 
     }
-
-/*     void Weapon::render() const {
-        SDL_RenderCopy(sys.getRen(), texture, NULL, &getRect());
-    } */
 
     void Weapon::updatePosition(){
         auto currentTime = std::chrono::high_resolution_clock::now();

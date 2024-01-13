@@ -1,8 +1,10 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #ifndef SESSION_H
 #define SESSION_H
+
+#include "Component.h"
 #include <vector>
 #include <string>
-#include "Component.h"
 
 namespace gameengine{
     class Session{
@@ -10,7 +12,6 @@ namespace gameengine{
             void add(Component* c);
             void protect(Component* c);
             void remove(Component* c);
-            //void triggerRemove(Component* c);
             void run();
             const std::vector<Component*> getComp() const { return comp; }
 

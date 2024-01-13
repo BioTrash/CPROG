@@ -1,3 +1,4 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #include "Label.h"
 #include "System.h"
 #include <SDL2/SDL_ttf.h>

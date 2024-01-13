@@ -1,7 +1,10 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #ifndef SYSTEM_H
 #define SYSTEM_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+
 namespace gameengine{
     class System{
         public:

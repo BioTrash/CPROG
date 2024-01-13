@@ -1,3 +1,4 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #include "Constants.h"
 
 namespace constants{

@@ -1,3 +1,4 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #include "System.h"
 #include "Constants.h"
 #include <SDL2/SDL.h>

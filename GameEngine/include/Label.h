@@ -1,5 +1,7 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #ifndef LABEL_H
 #define LABEL_H
+
 #include "Component.h"
 #include <string>
 #include <chrono>

@@ -1,3 +1,4 @@
+// Rufus Trukhin rutr7079 | CPROG  Programmeringsprojekt
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
@@ -23,7 +24,6 @@ namespace gameengine {
         virtual void updatePosition() {}
 
         bool operator==(const Component& other) const {
-            // Compare attributes for equality
             return (this->getRect().x == other.getRect().x) &&
             (this->getRect().y == other.getRect().y) &&
             (this->getRect().w == other.getRect().w) &&
@@ -37,10 +37,8 @@ namespace gameengine {
         SDL_Rect rect1 = this->getRect();
         SDL_Rect rect2 = target->getRect();
 
-        // Check if the rectangles overlap
         if (SDL_HasIntersection(&rect1, &rect2)) { return true; }
 
-        // No collision detected
         return false;
     }   
 
