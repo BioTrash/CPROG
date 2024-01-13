@@ -11,11 +11,6 @@
 using namespace gameengine;
 
 int main(int argc, char** argv) {
-
-    /*GAME TODO:
-        Game Over Screen
-        */
- 
     Session ses;
 
     ses.changeBackground(constants::gResPath + "images/spaceBG.jpg");
@@ -36,12 +31,12 @@ int main(int argc, char** argv) {
     ses.add(mc);
     ses.protect(mc);
 
-    Character* enemy = Character::getInstance(0, 0, 505/10, 361/10, constants::gResPath + "images/alien.png", 10, "Enemy");
+    Character* enemy = Character::getInstance(0, 0, 505/10, 361/10, constants::gResPath + "images/alien.png", 1, "Enemy");
 
     Projectile* projectile = Projectile::getInstance(10, 10, 10, 10, "Projectile", constants::gResPath + "images/projectile.png", 10);
 
-    enemy->setBehaviour([mc, time, projectile, ses](Character& target) {
-        target.setRect().y++;
+    enemy->setBehaviour([](Character& target) {
+        target.setRect().y += target.getSpeed();
     }); 
 
     Weapon* weapon = Weapon::getInstance(200, 200, 10, 10, "Weapon", 1, 1000, 1, ses, mc, projectile);
@@ -63,7 +58,7 @@ int main(int argc, char** argv) {
     int spawnerCount = 1;
     weaponManager->setBehaviour([&](Weapon& manager){
 
-        if((score->getContent() == "Score: " + std::to_string(5) || score->getContent() == "Score: " + std::to_string(50))){
+        if((score->getContent() == "Score: " + std::to_string(10) || score->getContent() == "Score: " + std::to_string(90))){
 
             secondWeapon->setBehaviour([mc](Weapon& newWeapon){
                 newWeapon.setRect().x = mc->getRect().x;
@@ -78,7 +73,7 @@ int main(int argc, char** argv) {
             secondWeapon->setProjectile(projectile);
         }
 
-        if((score->getContent() == "Score: " + std::to_string(10) || score->getContent() == "Score: " + std::to_string(100))){
+        if((score->getContent() == "Score: " + std::to_string(30) || score->getContent() == "Score: " + std::to_string(120))){
 
             thirdWeapon->setBehaviour([mc](Weapon& newWeapon){
                 newWeapon.setRect().x = mc->getRect().x + mc->getRect().w;
@@ -89,7 +84,7 @@ int main(int argc, char** argv) {
             thirdWeapon->setProjectile(projectile);
         }
 
-        if(score->getContent() == "Score: " + std::to_string(20)){
+        if(score->getContent() == "Score: " + std::to_string(70)){
 
             projectile->setBehaviour([&](Projectile& proj){
                 if(manager.detectCollision<Projectile, Character>("Projectile", "Enemy")){
@@ -117,7 +112,7 @@ int main(int argc, char** argv) {
             thirdWeapon->setProjectile(nullptr);
         }
 
-        if(score->getContent() == "Score: " + std::to_string(30)){
+        if(score->getContent() == "Score: " + std::to_string(100)){
 
             projectile->setBehaviour([&](Projectile& proj){
                 if(manager.detectCollision<Projectile, Character>("Projectile", "Enemy")){
@@ -160,19 +155,21 @@ int main(int argc, char** argv) {
             spawnerCount++;
         }
 
-        if(time->getContent() == "Time: " + std::to_string(30) && spawnerCount == 2){
+        if(time->getContent() == "Time: " + std::to_string(50) && spawnerCount == 2){
             Spawner* thirdSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
             ses.add(thirdSpawner);
             spawnerCount++;
         }
 
-        if(time->getContent() == "Time: " + std::to_string(45) && spawnerCount == 3){
+        if(time->getContent() == "Time: " + std::to_string(80) && spawnerCount == 3){
+            enemy->setSpeed(enemy->getSpeed() + 2);
             Spawner* fourthSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 20, 1.0f);
             ses.add(fourthSpawner);
             spawnerCount++;
         }
 
-        if(time->getContent() == "Time: " + std::to_string(60) && spawnerCount == 4){
+        if(time->getContent() == "Time: " + std::to_string(150) && spawnerCount == 4){
+            enemy->setSpeed(enemy->getSpeed() + 4);
             Spawner* fifthSpawner = Spawner::getInstance(0, 0, "Spawner", enemy, ses, 800, 100, 100, 1.0f);
             ses.add(fifthSpawner);
             spawnerCount++;
@@ -188,6 +185,17 @@ int main(int argc, char** argv) {
         manager.destroyOnCollision<Projectile, Character>("Projectile", "Enemy"); 
         manager.destroyOnCollision<Projectile, Character>("SecondProjectile", "Enemy"); 
         manager.destroyOnCollision<Projectile, Character>("ThirdProjectile", "Enemy"); 
+
+        if(time->getContent() == "Time: " + std::to_string(200) || manager.detectCollision<Character, Character>("Main Character", "Enemy")){
+            Label* finalScore = Label::getInstance(170, 250, 30, 60, "Final Score: " + std::to_string(i * (int)time->getTime()), "FinalScore");
+            finalScore->setColor(255, 255, 255);
+
+            for(Component* c : ses.getComp()){
+                ses.remove(c);
+            }
+            
+            ses.add(finalScore);
+        }
     });
 
     ses.add(weaponManager);

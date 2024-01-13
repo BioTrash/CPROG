@@ -19,6 +19,8 @@ namespace gameengine {
         void updatePosition() override;
         void keyDown(const SDL_Event& event) override;
         void keyUp(const SDL_Event& event) override;
+        int getSpeed() {return speed; }
+        void setSpeed(int newSpeed) { speed = newSpeed; }
 
         void setBehaviour(const std::function<void(Character&)>& behaviour) { behaviourFunction = behaviour; };
         const std::function<void(Character&)>& getBehaviour() { return behaviourFunction; };

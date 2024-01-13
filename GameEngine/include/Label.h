@@ -11,6 +11,7 @@ namespace gameengine{
             static Label* getInstance(int x, int y, int w, int h, std::string text, std::string id);
             void render() const;
             std::string getContent() const;
+            float getTime(){ return elapsedSeconds; }
             void setText(std::string newText);
             void setColor(Uint8 red, Uint8 green, Uint8 blue);
             void setTimer();
@@ -20,6 +21,7 @@ namespace gameengine{
         protected:
             Label(int x, int y, int w, int h, std::string text, std::string id);
         private:
+
             std::string content;
             SDL_Texture* texture;
 
